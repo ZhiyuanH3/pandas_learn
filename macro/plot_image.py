@@ -4,12 +4,19 @@ import numpy as np
 from matplotlib import pyplot
 
 
+
+pth_root = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/2d/no_pType/'
+
+#pth = pth_root + 'dR_test/rot_0/' #'pt/'
+#pth = pth_root + 'pt/'
+pth = pth_root + 'ce/'
+
 def plot_gen_img(i_start, batch_size, n_pixel):
 
     import h5py
     import pandas
     
-    pth            = '../'
+    #pth            = '../'
     Name           = 'vbf_qcd-train-v0_40cs.h5'
     #input_filename = pth+"vbf_qcd-test-v0_40cs.h5"
     #input_filename = pth+'vbf_qcd-val-v0_40cs.h5'
@@ -17,7 +24,8 @@ def plot_gen_img(i_start, batch_size, n_pixel):
     #input_filename = pth+'2d/'+Name
     #input_filename = pth+'2d/'+'color_C/pT_sorted/'+Name    
     #input_filename = pth+'2d/'+'c/'+Name     
-    input_filename = pth+'2d/'+'pt/'+Name    
+    #input_filename = pth+'2d/'+'pt/'+Name    
+    input_filename = pth+'/'+Name
 
     folder_name    = 'png'
     store          = pandas.HDFStore(input_filename)
@@ -35,10 +43,66 @@ def plot_gen_img(i_start, batch_size, n_pixel):
           
         im_arr = np.reshape(foo, (n_pixel, -1) )
         im_arr = np.array(im_arr)
-    
+        print im_arr
+   
         fig    = pyplot.imshow(im_arr)
+        pyplot.colorbar()
+        pyplot.title('pt')
         pyplot.savefig(pth+folder_name+'/'+str(i)+'.png')
+        pyplot.close()
 
 
 
-plot_gen_img(1, 10, 40)
+def overlay(i_start, batch_size, n_pixel):
+
+    from matplotlib.colors import LogNorm
+
+    Name           = 'vbf_qcd-train-v0_40cs.h5'
+    input_filename = pth+'/'+Name
+    folder_name    = 'png'
+    store          = pandas.HDFStore(input_filename)
+    tb = store.select('table'              ,
+                       start = i_start      ,
+                       stop  = i_start + batch_size)
+    
+
+
+    tb_sgn = tb[tb['is_signal_new']==1]
+    tb_bkg = tb[tb['is_signal_new']==0]
+
+
+    def plt_in(tb, out_names):
+        stb = tb.iloc[:, :-3]
+        stb = np.array(stb)
+        tot_im_arr     = np.zeros((40,40))
+     
+        if batch_size > len(stb):
+            batch_size_in = len(stb)
+            print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> batch_size_in: ', batch_size_in     
+        for i in range(batch_size_in):   
+            foo    = stb[i]
+            im_arr = np.reshape(foo, (n_pixel, -1) )
+            im_arr = np.array(im_arr)
+            tot_im_arr += im_arr 
+    
+    
+        fig    = pyplot.imshow(tot_im_arr, norm=LogNorm())
+        pyplot.colorbar()
+        pyplot.title('pt')
+        pyplot.savefig(pth+folder_name+'/'+out_names+'_overlay_'+str(batch_size)+'.png')
+        pyplot.close()
+
+    #plt_in(tb,'all')    
+    plt_in(tb_sgn,'sgn')
+    plt_in(tb_bkg,'bkg')
+
+
+
+n_pics    = 1
+n_overlay = 9580
+
+plot_gen_img(1, n_pics, 40)
+
+overlay(1, n_overlay, 40)
+
+
