@@ -7,24 +7,16 @@ from matplotlib import pyplot
 
 pth_root = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/2d/no_pType/'
 
-#pth = pth_root + 'dR_test/rot_0/' #'pt/'
-#pth = pth_root + 'pt/'
-pth = pth_root + 'ce/'
+pth = pth_root + 'dR_test/C/'
+#pth = pth_root + 'dR_test/E/'
+
 
 def plot_gen_img(i_start, batch_size, n_pixel):
 
     import h5py
     import pandas
     
-    #pth            = '../'
     Name           = 'vbf_qcd-train-v0_40cs.h5'
-    #input_filename = pth+"vbf_qcd-test-v0_40cs.h5"
-    #input_filename = pth+'vbf_qcd-val-v0_40cs.h5'
-    #input_filename = pth+'vbf_qcd-train-v0_40cs.h5'
-    #input_filename = pth+'2d/'+Name
-    #input_filename = pth+'2d/'+'color_C/pT_sorted/'+Name    
-    #input_filename = pth+'2d/'+'c/'+Name     
-    #input_filename = pth+'2d/'+'pt/'+Name    
     input_filename = pth+'/'+Name
 
     folder_name    = 'png'
@@ -89,7 +81,7 @@ def overlay(i_start, batch_size, n_pixel):
         fig    = pyplot.imshow(tot_im_arr, norm=LogNorm())
         pyplot.colorbar()
         pyplot.title('pt')
-        pyplot.savefig(pth+folder_name+'/'+out_names+'_overlay_'+str(batch_size)+'.png')
+        pyplot.savefig(pth+folder_name+'/'+out_names+'_overlay_'+str(batch_size_in)+'.png')
         pyplot.close()
 
     #plt_in(tb,'all')    
