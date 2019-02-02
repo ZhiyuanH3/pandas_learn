@@ -12,7 +12,11 @@ pth_root = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/pfc
 #pth = pth_root + 'dR_test/C/'
 #pth = pth_root + 'dR_test/E/'
 #pth = pth_root + '2d/E/'
-pth = pth_root + '2d/C/'
+#pth = pth_root + '2d/C/'
+#pth = pth_root + '2d/pixels_40/no_preprocess/E/'
+
+pth = pth_root + '2d/pixels_40/no_preprocess/C/'
+
 
 
 def plot_gen_img(i_start, batch_size, n_pixel):
@@ -109,7 +113,7 @@ def overlay(i_start, batch_size, n_pixel):
 n_pics    = 1
 n_overlay = 40000#10000#9580
 
-plot_gen_img(1, n_pics, 40)
+#plot_gen_img(1, n_pics, 40)
 
 overlay(1, n_overlay, 40)
 

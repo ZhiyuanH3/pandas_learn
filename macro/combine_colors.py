@@ -6,7 +6,8 @@ import os
 #pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_forLola/h5/'
 pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
 #pth          = pth_root + '2d/' + 'augmented/'
-pth          = pth_root + 'pfc_400/large_sgn/2d/'
+#pth          = pth_root + 'pfc_400/large_sgn/2d/'
+pth          = pth_root + 'pfc_400/large_sgn/2d/'+'pixels_28/'
 pth_out      = pth      + 'multi_cols/'
 
 h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-test-v0_40cs.h5']
