@@ -10,16 +10,22 @@ pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d
 #pth          = pth_root + 'pfc_400/large_sgn/2d/'+'pixels_28/'
 
 #pth          = pth_root + 'pfc_400/large_sgn/2d/'+'pixels_42/with_preprocess/'#'pixels_41/'#'pixels_43/'#'pixels_44/'
-pth          = pth_root + 'pfc_400/raw/output/test/50_5000/2d/'#+'pixels_42/with_preprocess/'
-pth_out      = pth      + 'multi_cols/'
+#pth          = pth_root + 'pfc_400/raw/output/test/50_5000/2d/'#+'pixels_42/with_preprocess/'
+pth          = pth_root + 'pfc_400/raw/output/train/test_from_50_5000/2d/'#+'pixels_42/with_preprocess/'
+
+#pth_out      = pth      + 'multi_cols/'
 
 compress_level  = 5
 h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-test-v0_40cs.h5']
-#color_list   = ['pt','ce'] # 'c'
-#color_list   = ['e','ce']
-color_list   = ['E','C']
-#color_list = ['E','C','H']
-#color_list = ['E','H']
+#color_list   = ['E','CE']
+#color_list   = ['E','CE','HE']
+#color_list   = ['E','HE']
+color_list   = ['E','CHE']
+#color_list   = ['CE','HE']
+#color_list = []
+
+pth_out      = pth + '_'.join(color_list) 
+
 
 if not os.path.isdir(pth_out):
     os.system('mkdir '+pth_out)
