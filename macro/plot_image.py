@@ -4,8 +4,8 @@ import numpy as np
 from matplotlib import pyplot
 
 
-#title    = 'Energy'
-title    = 'Energy*If_Charged'
+title    = 'Energy'
+#title    = 'Energy*If_Charged'
 
 #pth_root = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/2d/no_pType/'
 pth_root = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/pfc_400/large_sgn/'
@@ -13,9 +13,9 @@ pth_root = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/pfc
 #pth = pth_root + 'dR_test/E/'
 #pth = pth_root + '2d/E/'
 #pth = pth_root + '2d/C/'
-#pth = pth_root + '2d/pixels_40/no_preprocess/E/'
+pth = pth_root + '2d/pixels_40/no_preprocess/E/'
 
-pth = pth_root + '2d/pixels_40/no_preprocess/C/'
+#pth = pth_root + '2d/pixels_40/no_preprocess/C/'
 
 
 
@@ -71,12 +71,18 @@ def overlay(i_start, batch_size, n_pixel):
 
     tb_sgn_orig = tb[tb['is_signal_new']==1].copy()
     tb_bkg_orig = tb[tb['is_signal_new']==0].copy()
+    #tb_bkg_orig = tb_bkg_orig[tb_bkg_orig['weight']>0.01].copy()
+    #tb_bkg_orig = tb_bkg_orig[tb_bkg_orig['weight']<0.01].copy()
+
+    #tb_bkg_orig = tb_bkg_orig[tb_bkg_orig['weight']<0.0001].copy()
+
+
     #print tb_bkg
 
     tb_sgn = tb_sgn_orig 
     #tb_sgn = tb_sgn_orig.apply(lambda x: x * x['weight'] * 1, axis=1)  
-    #tb_bkg = tb_bkg_orig.apply(lambda x: x * x['weight'] * 100000000, axis=1) 
-    tb_bkg = tb_bkg_orig.apply(lambda x: x * 1, axis=1)    
+    tb_bkg = tb_bkg_orig.apply(lambda x: x * x['weight'] * 100000000, axis=1) 
+    #tb_bkg = tb_bkg_orig.apply(lambda x: x * 1, axis=1)    
 
     #print tb_bkg
     #print tb_bkg_orig

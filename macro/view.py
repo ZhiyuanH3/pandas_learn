@@ -3,7 +3,8 @@ import h5py
 import pandas
 
 #pth            = '../'
-pth            = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_forLola/h5/2d/multi_cols/'
+#pth            = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_forLola/h5/2d/multi_cols/'
+pth            = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/pfc_400/large_sgn/with_chf/output/train/'
 Name           = 'vbf_qcd-train-v0_40cs.h5'
 #input_filename = pth+"vbf_qcd-test-v0_40cs.h5"
 #input_filename = pth+'vbf_qcd-val-v0_40cs.h5'
