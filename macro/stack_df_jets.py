@@ -44,7 +44,8 @@ def stack_df(file_name):
         stb_i     = read_h5(jet_i, fn)
         stb_list.append(stb_i)
     stb_stacked   = pd.concat(stb_list, ignore_index=True)
-    stb_stacked.to_hdf(pth_out+'/'+file_name_out, 'table', append=False, complevel=8)
+    stb_stacked.to_hdf(pth_out+'/'+file_name_out, key='df', mode='w', dropna=True)
+    #stb_stacked.to_hdf(pth_out+'/'+file_name_out, 'table', append=False, complevel=8)
     #stb_stacked.to_hdf(pth_out+'/'+file_name_out, 'table', append=True, complevel=8)
 
 
