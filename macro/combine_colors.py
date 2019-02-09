@@ -2,18 +2,9 @@ import pandas as pd
 import numpy  as np
 import os
 
-
-#pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_forLola/h5/'
 pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
-#pth          = pth_root + '2d/' + 'augmented/'
-#pth          = pth_root + 'pfc_400/large_sgn/2d/'
-#pth          = pth_root + 'pfc_400/large_sgn/2d/'+'pixels_28/'
-
-#pth          = pth_root + 'pfc_400/large_sgn/2d/'+'pixels_42/with_preprocess/'#'pixels_41/'#'pixels_43/'#'pixels_44/'
-#pth          = pth_root + 'pfc_400/raw/output/test/50_5000/2d/'#+'pixels_42/with_preprocess/'
-pth          = pth_root + 'pfc_400/raw/output/train/test_from_50_5000/2d/'#+'pixels_42/with_preprocess/'
-
-#pth_out      = pth      + 'multi_cols/'
+#pth          = pth_root + 'pfc_400/raw/output/train/test_from_50_5000/2d/'#+'pixels_42/with_preprocess/'
+pth          = pth_root + 'pfc_400/raw/2jets/output/test/50_5000/test_from_1j/2d/'
 
 compress_level  = 5
 h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-test-v0_40cs.h5']
@@ -22,7 +13,6 @@ h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-tes
 #color_list   = ['E','HE']
 color_list   = ['E','CHE']
 #color_list   = ['CE','HE']
-#color_list = []
 
 pth_out      = pth + '_'.join(color_list) 
 
