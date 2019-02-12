@@ -3,10 +3,13 @@ import numpy  as np
 import os
 
 pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
-#pth          = pth_root + 'pfc_400/raw/output/train/test_from_50_5000/2d/'#+'pixels_42/with_preprocess/'
-pth          = pth_root + 'pfc_400/raw/2jets/output/test/50_5000/test_from_1j/2d/'
+#pth          = pth_root + 'pfc_400/raw/output/train/test_from_50_5000/2d/'
+#pth          = pth_root + 'pfc_400/raw/2jets/output/test/50_5000/test_from_1j/2d/'
 
-compress_level  = 5
+pth          = pth_root + 'pfc_400/raw/2jets/output/train/test_from_50_5000/2d/'
+
+
+compress_level  = 8#5
 h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-test-v0_40cs.h5']
 #color_list   = ['E','CE']
 #color_list   = ['E','CE','HE']
