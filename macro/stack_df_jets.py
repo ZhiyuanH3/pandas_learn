@@ -2,12 +2,14 @@ import pandas as pd
 import numpy  as np
 import os
 
-pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
-pth          = pth_root + 'pfc_400/raw/' 
-pth_out      = pth      + '2jets'
+#pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
+pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/'
+pth         = pth_root + 'raw/'#'pfc_400/raw/' 
+pth_out     = pth      + '2jets'
 
+mode_str    = '_hla'#'_pfc'#'_hla'
 
-jet_list     = ['leading_jet','sub_leading_jet'] 
+jet_list    = ['leading_jet','sub_leading_jet'] 
 
 qcd_list    = ['100to200','200to300','300to500','500to700','700to1000','1000to1500','1500to2000','2000toInf']
 m_list      = [20,30,40,50]
@@ -39,8 +41,8 @@ def stack_df(file_name):
     print file_name_out
     stb_list      = []
     for jet_i in jet_list:
-        if   jet_i == 'leading_jet'    :    fn = file_name.replace(sgnt_str,'_j0')
-        elif jet_i == 'sub_leading_jet':    fn = file_name.replace(sgnt_str,'_j1')
+        if   jet_i == 'leading_jet'    :    fn = file_name.replace(sgnt_str,'_j0'+mode_str)
+        elif jet_i == 'sub_leading_jet':    fn = file_name.replace(sgnt_str,'_j1'+mode_str)
         stb_i     = read_h5(jet_i, fn)
         stb_list.append(stb_i)
     stb_stacked   = pd.concat(stb_list, ignore_index=True)
