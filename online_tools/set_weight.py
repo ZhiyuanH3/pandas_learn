@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy  as np
 
-
+from sklearn.utils import shuffle
 
 
 #def calc_weights(row,n_sgn,xs_tot,cat_n_dic):
@@ -32,6 +32,8 @@ class onlineDF:
             elif row['is_signal_new'] == 0:    return xs/float(self.xs_tot * self.cat_n_dic[xs])
         (self.df)['weight'] = (self.df).apply( lambda row: calc_weights(row), axis=1 )
         return (self.df)['weight']
+
+    def shuffle(self):    self.df = shuffle(self.df)
 
 
 
