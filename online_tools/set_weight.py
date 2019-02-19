@@ -33,7 +33,7 @@ class onlineDF:
         (self.df)['weight'] = (self.df).apply( lambda row: calc_weights(row), axis=1 )
         return (self.df)['weight']
 
-    def shuffle(self):    self.df = shuffle(self.df)
+    def shuffle(self,seed=0):    self.df = shuffle(self.df, random_state=seed)
 
 
 

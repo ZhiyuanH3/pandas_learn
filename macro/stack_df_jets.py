@@ -3,11 +3,13 @@ import numpy  as np
 import os
 
 #pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
+#pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/'
 pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/'
+
 pth         = pth_root + 'raw/'#'pfc_400/raw/' 
 pth_out     = pth      + '2jets'
 
-mode_str    = '_hla'#'_pfc'#'_hla'
+mode_str    = '_pfc'#'_hla'
 
 jet_list    = ['leading_jet','sub_leading_jet'] 
 

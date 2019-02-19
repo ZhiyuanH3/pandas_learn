@@ -1,0 +1,8 @@
+*.pyc
+*.pkl
+*.pickle
+*.png
+*.pdf
+*.root
+*.txt
+
