@@ -2,19 +2,20 @@ import pandas as pd
 import numpy  as np
 import os
 
-pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
+pth_root      = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_format/'
+#pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
 #pth          = pth_root + 'pfc_400/raw/output/train/test_from_50_5000/2d/'
 #pth          = pth_root + 'pfc_400/raw/2jets/output/test/50_5000/test_from_1j/2d/'
 
-pth          = pth_root + 'pfc_400/raw/2jets/output/train/test_from_50_5000/2d/'
-
+#pth          = pth_root + 'pfc_400/raw/2jets/output/train/test_from_50_5000/2d/'
+pth          = pth_root + '2jets/playground/lola/train40_5000val40_2000test50_5000/2d/'
 
 compress_level  = 8#5
 h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-test-v0_40cs.h5']
 #color_list   = ['E','CE']
-#color_list   = ['E','CE','HE']
+color_list   = ['E','CE','HE']
 #color_list   = ['E','HE']
-color_list   = ['E','CHE']
+#color_list   = ['E','CHE']
 #color_list   = ['CE','HE']
 
 pth_out      = pth + '_'.join(color_list) 
@@ -69,7 +70,16 @@ def combine_df(file_name):
     stb_list.append(stb_labels)
         
     stb_comb       = pd.concat(stb_list, axis=1)
-    stb_comb.to_hdf(pth_out+'/'+file_name, 'table', append=True, complevel=compress_level)
+    #stb_comb.to_hdf(pth_out+'/'+file_name, 'table', append=True, complevel=compress_level)
+
+
+    df_out_t            = pd.DataFrame()
+    df_out_t['tuple']   = stb_comb.apply(lambda r: tuple(r), axis=1).apply(np.array)
+    print df_out_t.astype(str) 
+
+    df_out_t.astype(str).to_hdf(pth_out+'/'+file_name, 'table', append=True, complevel=compress_level)
+    #df_out_t.to_hdf(pth_out+'/'+file_name, 'fixed', append=True, complevel=compress_level)
+
 
 
 for i in h5_name_list:

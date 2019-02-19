@@ -4,8 +4,12 @@ import os
 
 
 #pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_forLola/h5/'
-pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
-pth          = pth_root + '2d/' + 'augmented/' + 'e/'
+#pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
+pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_format/2jets/playground/lola/train40_5000val40_2000test50_5000/' 
+
+#pth          = pth_root + '2d/' + 'augmented/' + 'e/'
+pth          = pth_root + '2d/'
+
 pth_out      = pth      + 'stacked'#'augmented'#'multi_cols/'
 
 h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-test-v0_40cs.h5']
@@ -86,8 +90,13 @@ def stack_df(file_name):
     #stb_list.append(stb_labels)
 
     stb_stacked = pd.concat(stb_list, ignore_index=True)
-    
-    stb_stacked.to_hdf(pth_out+'/'+file_name, 'table', append=True, complevel=5)
+    #stb_stacked.to_hdf(pth_out+'/'+file_name, 'table', append=True, complevel=5)
+
+
+    df_out_t            = pd.DataFrame()
+    df_out_t['tuple']   = stb_stacked.apply(lambda r: tuple(r), axis=1).apply(np.array)
+   
+    df_out_t.to_hdf(pth_out+'/'+file_name, 'table', append=True, complevel=5)
 
 for i in h5_name_list:
     #combine_df(i)
