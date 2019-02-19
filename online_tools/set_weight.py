@@ -15,15 +15,23 @@ from sklearn.utils import shuffle
 
 class onlineDF:
 
-    def __init__(self,df,xs_dic):
+    def __init__(self,df,xs_tot):#,xs_dic):
         self.sgn_str   = 'is_signal_new' 
-        self.xs_dic    = xs_dic
-        self.xs_tot    = sum( xs_dic.values() ) 
+        #self.xs_dic    = xs_dic
+        #self.xs_tot    = sum( xs_dic.values() ) 
+ 
+        self.xs_tot    = xs_tot
+
         self.df        = df
         self.n_events  = df.shape[0]
         self.n_sgn     = df[ df[self.sgn_str]==1 ].count()[self.sgn_str] 
         self.n_bkg     = df[ df[self.sgn_str]==0 ].count()[self.sgn_str]
         self.cat_n_dic = dict(df.groupby('xs').size() )
+ 
+        # Testing~~~~  
+        #self.xs_tot    = sum(self.cat_n_dic)    
+        self.w_dic     = {i:  i/float(self.xs_tot * self.cat_n_dic[i])  for i in self.cat_n_dic}          
+
 
     def set_weights(self):
         def calc_weights(row):
@@ -36,6 +44,13 @@ class onlineDF:
     def shuffle(self,seed=0):    self.df = shuffle(self.df, random_state=seed)
 
 
+    def set_weights_q(self):
+        df  = self.df 
+
+        if self.n_sgn != 0     :    df.loc[  df['is_signal_new'] == 1, 'weight'  ] = 1./float(self.n_sgn)  
+        for i in self.cat_n_dic:    df.loc[  df['xs'] == i, 'weight'  ]            = self.w_dic[i]
+            
+        return (self.df)['weight']
 
 
 
