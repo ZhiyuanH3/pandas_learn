@@ -29,6 +29,8 @@ os.system('mkdir '+pth_out)
 #k_fold            = 10
 #nan_replacement   = 0 
 xs  = { '100to200': 28060000 , '200to300': 1710000 , '300to500': 351300 , '500to700': 31630 , '700to1000': 6802 , '1000to1500': 1206 , '1500to2000': 120.4 , '2000toInf': 25.25 }
+
+xs_tot = sum(xs.values())
 #====settings==================================================================================================
 
 qcd_inst = pkl_df(pth_root+'2jets/', 'qcd_all_400pfc'+'.h5')
@@ -44,12 +46,18 @@ tvt_dic['test']  = pd.concat( [df_qcd_dic_j0[2], sgn_inst['test'].df] )
 
 tb_dict          = {}
 for key in tvt_l:
-    tmp_inst     = onlineDF(tvt_dic[key], xs)
-    tmp_inst.set_weights()
+    tmp_inst     = onlineDF(tvt_dic[key], xs_tot)
+    #tmp_inst     = onlineDF(tvt_dic[key], xs)
+    print tmp_inst.set_weights()
+    #print tmp_inst
+    #print '~~~~~~~~~~~~~~~~~~~~~~~~'
+    #print tmp_inst.set_weights_q()
+
     tmp_inst.shuffle()
     #tb_dict[key] =tmp_inst.df
     #print tb_dict[key][:8] 
 
+    #exit()
     (tmp_inst.df).to_hdf( pth_out + 'vbf_qcd-'+key+'-'+'v0_40cs'+'.h5','table',append=True)
 
 

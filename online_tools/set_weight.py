@@ -47,11 +47,10 @@ class onlineDF:
     def set_weights_q(self):
         df  = self.df 
 
-        if self.n_sgn != 0     :    df.loc[  df['is_signal_new'] == 1, 'weight'  ] = 1./float(self.n_sgn)  
         for i in self.cat_n_dic:    df.loc[  df['xs'] == i, 'weight'  ]            = self.w_dic[i]
-            
-        return (self.df)['weight']
+        if self.n_sgn != 0     :    df.loc[  df['is_signal_new'] == 1, 'weight'  ] = 1./float(self.n_sgn)  
 
+        return (self.df)['weight']
 
 
 
