@@ -33,6 +33,8 @@ def read_h5(col_str,Name):
     #	                           start = i_start      ,
     #	                           stop  = i_start + batch_size)
     col_list    = list(tb.columns.values)
+    #print col_list
+
     count       = 0
     for i in col_list:
         if pre_fix in i:
@@ -71,13 +73,16 @@ def combine_df(file_name):
         
     stb_comb       = pd.concat(stb_list, axis=1)
     #stb_comb.to_hdf(pth_out+'/'+file_name, 'table', append=True, complevel=compress_level)
-
+    print stb_comb.shape[1]
 
     df_out_t            = pd.DataFrame()
     df_out_t['tuple']   = stb_comb.apply(lambda r: tuple(r), axis=1).apply(np.array)
-    print df_out_t.astype(str) 
+    print df_out_t.astype(list) 
 
-    df_out_t.astype(str).to_hdf(pth_out+'/'+file_name, 'table', append=True, complevel=compress_level)
+    print len(df_out_t['tuple'][0])
+    print len(df_out_t.astype(list))
+    #exit()
+    (df_out_t.astype(list)).to_hdf(pth_out+'/'+file_name, 'df', mode='w', format='fixed', append=False, complevel=compress_level, complib='blosc')
     #df_out_t.to_hdf(pth_out+'/'+file_name, 'fixed', append=True, complevel=compress_level)
 
 
