@@ -15,8 +15,12 @@ h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-tes
 #color_list   = ['E','CE']
 color_list   = ['E','CE','HE']
 #color_list   = ['E','HE']
-#color_list   = ['E','CHE']
+color_list   = ['E','CHE']
 #color_list   = ['CE','HE']
+color_list   = ['E','CHE','CE']
+color_list   = ['E','CHE','HE']
+color_list   = ['CE','CHE','HE']
+
 
 pth_out      = pth + '_'.join(color_list) 
 
