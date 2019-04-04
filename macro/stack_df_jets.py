@@ -4,14 +4,20 @@ import os
 
 #pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
 #pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/'
-pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/'
+#pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/'
+pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/allInOne/'
+n_jets      = 4
 
-pth         = pth_root + 'raw/'#'pfc_400/raw/' 
-pth_out     = pth      + '2jets'
+#pth         = pth_root + 'raw/' + 'with_nPixelHits/'     #'pfc_400/raw/' 
+pth         = pth_root + 'raw/' 
+pth_out     = pth      + str(n_jets) + 'jets' 
+#pth_out     = pth      + '2jets'
 
 mode_str    = '_pfc'#'_hla'
 
-jet_list    = ['leading_jet','sub_leading_jet'] 
+jet_list    = []
+for i in range(n_jets):    jet_list.append('jet'+str(i))
+#jet_list    = ['leading_jet','sub_leading_jet'] 
 
 qcd_list    = ['100to200','200to300','300to500','500to700','700to1000','1000to1500','1500to2000','2000toInf']
 m_list      = [20,30,40,50]
@@ -39,13 +45,20 @@ def read_h5(in_str,Name):
     return pd.read_hdf(input_filename, 'df')
 
 def stack_df(file_name):
-    file_name_out = file_name.replace(sgnt_str,'_2j')
+    #file_name_out = file_name.replace(sgnt_str,'_2j')
+    file_name_out = file_name.replace(sgnt_str,'_'+str(n_jets)+'j')
     print file_name_out
     stb_list      = []
     for jet_i in jet_list:
-        if   jet_i == 'leading_jet'    :    fn = file_name.replace(sgnt_str,'_j0'+mode_str)
-        elif jet_i == 'sub_leading_jet':    fn = file_name.replace(sgnt_str,'_j1'+mode_str)
+        #if   jet_i == 'leading_jet'    :    fn = file_name.replace(sgnt_str,'_j0'+mode_str)
+        #elif jet_i == 'sub_leading_jet':    fn = file_name.replace(sgnt_str,'_j1'+mode_str)
+        fn        = file_name.replace(sgnt_str,'_j'+jet_i[3:]+mode_str) 
         stb_i     = read_h5(jet_i, fn)
+        
+        stb_i['jetIndex_0'] = int( jet_i[3:] )
+        #if   jet_i == 'leading_jet'    :    stb_i['jetIndex_0'] = 0
+        #elif jet_i == 'sub_leading_jet':    stb_i['jetIndex_0'] = 1 
+
         stb_list.append(stb_i)
     stb_stacked   = pd.concat(stb_list, ignore_index=True)
     stb_stacked.to_hdf(pth_out+'/'+file_name_out, key='df', mode='w', dropna=True)

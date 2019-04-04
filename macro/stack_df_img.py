@@ -5,7 +5,9 @@ import os
 
 #pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_forLola/h5/'
 #pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/Skim/fromBrian_for2d/'
-pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_format/2jets/playground/lola/train40_5000val40_2000test50_5000/' 
+#pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_format/2jets/playground/lola/train40_5000val40_2000test50_5000/' 
+pth_root     = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_format/2jets/DPG/lola/train50_500val30_2000test50_5000/'
+
 
 #pth          = pth_root + '2d/' + 'augmented/' + 'e/'
 pth          = pth_root + '2d/'

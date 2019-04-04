@@ -8,7 +8,9 @@ pth_root      = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_for
 #pth          = pth_root + 'pfc_400/raw/2jets/output/test/50_5000/test_from_1j/2d/'
 
 #pth          = pth_root + 'pfc_400/raw/2jets/output/train/test_from_50_5000/2d/'
-pth          = pth_root + '2jets/playground/lola/train40_5000val40_2000test50_5000/2d/'
+#pth          = pth_root + '2jets/playground/lola/train40_5000val40_2000test50_5000/2d/'
+pth           = pth_root + '2jets/DPG/lola/train50_500val30_2000test50_5000/2d/'
+
 
 compress_level  = 8#5
 h5_name_list = ['vbf_qcd-train-v0_40cs.h5','vbf_qcd-val-v0_40cs.h5','vbf_qcd-test-v0_40cs.h5']
@@ -18,8 +20,10 @@ color_list   = ['E','CE','HE']
 color_list   = ['E','CHE']
 #color_list   = ['CE','HE']
 color_list   = ['E','CHE','CE']
-color_list   = ['E','CHE','HE']
-color_list   = ['CE','CHE','HE']
+#color_list   = ['E','CHE','HE']
+#color_list   = ['CE','CHE','HE']
+#color_list   = ['E','E','E']
+
 
 
 pth_out      = pth + '_'.join(color_list) 
