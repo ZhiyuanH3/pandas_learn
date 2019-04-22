@@ -8,83 +8,49 @@ from set_weight       import *
 from DataTypes        import pkl_df
 
 #====settings==================================================================================================
-n_pfc         = 40#400
-
 tvt_l         = ['train','val','test']
-phpt          = {}
-phpt['train'] = '30_500'#'50_500'#'30_500'#'40_5000'
-phpt['val']   = '30_2000'#'50_1000'#'40_2000'
-phpt['test']  = '50_5000'
+#phpt          = {}
+#phpt['train'] = '40_5000'
+#phpt['val']   = '40_2000'
+#phpt['test']  = '50_5000'
+#ABC_str       = ''
+#for i in tvt_l:    ABC_str += i+phpt[i]
 
-
-
-if sys.argv[1]:
-    phpt['test']  = sys.argv[1]
-    #phpt['train']  = sys.argv[1]
-
-
-ABC_str       = ''
-for i in tvt_l:    ABC_str += i+phpt[i]
-
-#pth_root      = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_format/'
-pth_root      = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/allInOne/nn_format/'
-#pth_test_sgn  = pth_root + 'leading_jet/' + '/test/'+phpt['test']+'/'
-pth_test_sgn  = pth_root + '2jets/' + '/test/'+phpt['test']+'/'
-#pth           = pth_root + '2jets/' + 'playground/' 
-pth           = pth_root + '2jets/' + 'DPG/'
-pth_dic       = {}
-for i in tvt_l:    pth_dic[i] = pth_root + '2jets/' + '/test/'+phpt[i]+'/'
+pth_root    = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_format/with_mass/'
+pth         = pth_root + 'playground/' 
+pth_dic     = {}
+#for i in tvt_l:    pth_dic[i] = pth_root + '/test/'+phpt[i]+'/'
 
 pth_out_lola = pth + 'lola/'
 os.system('mkdir '+pth_out_lola)
-pth_out     = pth_out_lola + ABC_str +'/'
+pth_out     = pth_out_lola# + ABC_str +'/'
 os.system('mkdir '+pth_out)
 #k_fold            = 10
 #nan_replacement   = 0 
 xs  = { '100to200': 28060000 , '200to300': 1710000 , '300to500': 351300 , '500to700': 31630 , '700to1000': 6802 , '1000to1500': 1206 , '1500to2000': 120.4 , '2000toInf': 25.25 }
-
 xs_tot = sum(xs.values())
 #====settings==================================================================================================
 
-qcd_inst = pkl_df(pth_root+'2jets/', 'qcd_all_400pfc'+'.h5')
-sgn_inst = {}
-for i in tvt_l:    sgn_inst[i]  = pkl_df(pth_dic[i], 'vbf_'+phpt[i]+'_all_400pfc'+'.h5')
-sgn_inst['test']                = pkl_df(pth_test_sgn, 'vbf_'+phpt['test']+'_all_400pfc'+'.h5')
-_, df_qcd_dic_j0, df_qcd_dic_j1 = qcd_inst.splitTV(3)
-
+qcd_inst = pkl_df(pth_root, 'qcd_all_400pfc'+'.h5')
+#sgn_inst = {}
+#for i in tvt_l:    sgn_inst[i] = pkl_df(pth_dic[i], 'vbf_'+phpt[i]+'_all_400pfc'+'.h5')
+_, df_qcd_dic = qcd_inst.splitN(3)
 tvt_dic          = {}
-tvt_dic['train'] = pd.concat( [df_qcd_dic_j0[0], df_qcd_dic_j1[0], df_qcd_dic_j1[2], sgn_inst['train'].df] )
-tvt_dic['val']   = pd.concat( [df_qcd_dic_j0[1], df_qcd_dic_j1[1], sgn_inst['val'].df] )
-tvt_dic['test']  = pd.concat( [df_qcd_dic_j0[2], sgn_inst['test'].df] )
+tvt_dic['train'] = df_qcd_dic[0]
+tvt_dic['val']   = df_qcd_dic[1]
+tvt_dic['test']  = df_qcd_dic[2]
 
 tb_dict          = {}
 for key in tvt_l:
-    tmp_inst     = onlineDF(tvt_dic[key], xs_tot)
     #tmp_inst     = onlineDF(tvt_dic[key], xs)
-    print tmp_inst.set_weights()
-    #print tmp_inst
-    #print '~~~~~~~~~~~~~~~~~~~~~~~~'
-    #print tmp_inst.set_weights_q()
-
+    tmp_inst     = onlineDF(tvt_dic[key], xs_tot)
+    tmp_inst.set_weights()
     tmp_inst.shuffle()
     #tb_dict[key] =tmp_inst.df
     #print tb_dict[key][:8] 
 
-    #exit()
-    #(tmp_inst.df).to_hdf( pth_out + 'vbf_qcd-'+key+'-'+'v0_40cs'+'.h5','table',append=True)
+    (tmp_inst.df).to_hdf( pth_out + 'vbf_qcd-'+key+'-'+'v0_40cs'+'.h5','table',append=True)
 
-    orig_cols = list((tmp_inst.df).columns)
-    drop_lst  = ['pt','jetIndex','PID']
-    col2drop  = []
-    for j in drop_lst:
-        col2drop += [j+'_'+str(i) for i in range(n_pfc)]
-    #col2drop  = ['jetIndex_'+str(i) for i in range(400)] + ['PID_'+str(i) for i in range(400)]
-
-    col2keep  = orig_cols
-    for i in col2drop:
-        col2keep.remove(i)  
-
-    ((tmp_inst.df)[ col2keep ]).to_hdf( pth_out + 'vbf_qcd-'+key+'-'+'v0_40cs'+'.h5','table',append=False)
 
 
 

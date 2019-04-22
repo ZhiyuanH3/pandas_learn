@@ -10,11 +10,14 @@ from DataTypes        import pkl_df
 #====settings==================================================================================================
 n_pfc         = 40#400
 
+v_production  = 'v6'
+n_jets        = 4
+
 tvt_l         = ['train','val','test']
 phpt          = {}
 phpt['train'] = '30_500'#'50_500'#'30_500'#'40_5000'
-phpt['val']   = '30_2000'#'50_1000'#'40_2000'
-phpt['test']  = '50_5000'
+phpt['val']   = '40_1000'#'30_2000'#'50_1000'#'40_2000'
+phpt['test']  = '30_1000'#'50_5000'
 
 
 
@@ -26,19 +29,21 @@ if sys.argv[1]:
 ABC_str       = ''
 for i in tvt_l:    ABC_str += i+phpt[i]
 
-#pth_root      = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/all_in_1/nn_format/'
 pth_root      = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/LLP/allInOne/nn_format/'
-#pth_test_sgn  = pth_root + 'leading_jet/' + '/test/'+phpt['test']+'/'
-pth_test_sgn  = pth_root + '2jets/' + '/test/'+phpt['test']+'/'
-#pth           = pth_root + '2jets/' + 'playground/' 
-pth           = pth_root + '2jets/' + 'DPG/'
+pth_jets      = pth_root + str(n_jets) + 'jets/'
+pth_test_sgn  = pth_jets + '/test/'+phpt['test']+'/'
+pth           = pth_jets + v_production + '/'
 pth_dic       = {}
-for i in tvt_l:    pth_dic[i] = pth_root + '2jets/' + '/test/'+phpt[i]+'/'
+for i in tvt_l:    pth_dic[i] = pth_jets + '/test/'+phpt[i]+'/'
 
 pth_out_lola = pth + 'lola/'
 os.system('mkdir '+pth_out_lola)
 pth_out     = pth_out_lola + ABC_str +'/'
 os.system('mkdir '+pth_out)
+
+
+exit()
+
 #k_fold            = 10
 #nan_replacement   = 0 
 xs  = { '100to200': 28060000 , '200to300': 1710000 , '300to500': 351300 , '500to700': 31630 , '700to1000': 6802 , '1000to1500': 1206 , '1500to2000': 120.4 , '2000toInf': 25.25 }
