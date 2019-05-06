@@ -41,6 +41,8 @@ def TVTgen(
 
     #xs  = { '50to100': 246300000, '100to200': 28060000 , '200to300': 1710000 , '300to500': 351300 , '500to700': 31630 , '700to1000': 6802 , '1000to1500': 1206 , '1500to2000': 120.4 , '2000toInf': 25.25 }
     xs  = { '100to200': 28060000 , '200to300': 1710000 , '300to500': 351300 , '500to700': 31630 , '700to1000': 6802 , '1000to1500': 1206 , '1500to2000': 120.4 , '2000toInf': 25.25 }
+    #xs  = { '200to300': 1710000 , '300to500': 351300 , '500to700': 31630 , '700to1000': 6802 , '1000to1500': 1206 , '1500to2000': 120.4 , '2000toInf': 25.25 }
+
     xs_tot = sum(xs.values())
 
     file_tail = '_all_'+str(n_pfc)+'pfc'
@@ -117,16 +119,18 @@ def TVTgen(
     #tvt_dic['test']  = pd.concat( [ B[1][1], B[1][3], sgn_inst['test'].jets.get_group(1)] )
 
     ################################################ bdt no lola good (_3)
-    #"""
+    """
     tvt_dic['train'] = pd.concat( [ B[1][0], B[1][2], sgn_inst['train'].jets.get_group(1)] )
     tvt_dic['val']   = pd.concat( [ B[1][3], sgn_inst['val'].jets.get_group(1)] )
     tvt_dic['test']  = pd.concat( [ B[1][1], sgn_inst['test'].jets.get_group(1)] )
-    #"""
+    """
 
     # bdt no lola no  (_4)
-    #tvt_dic['train'] = pd.concat( [ B[0][0], B[0][2], sgn_inst['train'].jets.get_group(0)] )
-    #tvt_dic['val']   = pd.concat( [ B[0][3], sgn_inst['val'].jets.get_group(0)] )
-    #tvt_dic['test']  = pd.concat( [ B[0][1], sgn_inst['test'].jets.get_group(0)] )
+    """
+    tvt_dic['train'] = pd.concat( [ B[0][0], B[0][2], sgn_inst['train'].jets.get_group(0)] )
+    tvt_dic['val']   = pd.concat( [ B[0][3], sgn_inst['val'].jets.get_group(0)] )
+    tvt_dic['test']  = pd.concat( [ B[0][1], sgn_inst['test'].jets.get_group(0)] )
+    """
 
     # bdt strange lola not working 0 values (_5)
     #tvt_dic['train'] = pd.concat( [ B[3][0], B[3][2], sgn_inst['train'].jets.get_group(3)] )
@@ -134,7 +138,7 @@ def TVTgen(
     #tvt_dic['test']  = pd.concat( [ B[3][1], sgn_inst['test'].jets.get_group(3)] )
  
     """
-    # bdt ok lola goog not as good as 3
+    # bdt ok lola good not as good as 3
     tvt_dic['train'] = pd.concat( [ B[0][0], B[0][2], B[1][0], B[1][2], sgn_inst['train'].jets.get_group(0), sgn_inst['train'].jets.get_group(1)] )
     tvt_dic['val']   = pd.concat( [ B[0][3], B[1][3], sgn_inst['val'].jets.get_group(0), sgn_inst['val'].jets.get_group(1)] )
     tvt_dic['test']  = pd.concat( [ B[0][1], B[1][1], sgn_inst['test'].jets.get_group(0), sgn_inst['test'].jets.get_group(1)] )
@@ -145,6 +149,30 @@ def TVTgen(
     tvt_dic['train'] = pd.concat( [ B[0][0], B[1][0], B[2][0], B[3][0], B[0][2], B[1][2], B[2][2], B[3][2], sgn_inst['train'].jets.get_group(0), sgn_inst['train'].jets.get_group(1), sgn_inst['train'].jets.get_group(2), sgn_inst['train'].jets.get_group(3)] )
     tvt_dic['val']   = pd.concat( [ B[0][3], B[1][3], B[2][3], B[3][3], sgn_inst['val'].jets.get_group(0), sgn_inst['val'].jets.get_group(1), sgn_inst['val'].jets.get_group(2), sgn_inst['val'].jets.get_group(3)] )
     tvt_dic['test']  = pd.concat( [ B[0][1], B[1][1], B[2][1], B[3][1], sgn_inst['test'].jets.get_group(0), sgn_inst['test'].jets.get_group(1), sgn_inst['test'].jets.get_group(2), sgn_inst['test'].jets.get_group(3)] )
+    """
+
+
+
+    # jet 0123
+    tvt_dic['train'] = pd.concat( [ B[0][0], B[1][0], B[2][0], B[3][0], B[0][2], B[1][2], B[2][2], B[3][2], sgn_inst['train'].jets.get_group(0), sgn_inst['train'].jets.get_group(1), sgn_inst['train'].jets.get_group(2), sgn_inst['train'].jets.get_group(3)] )
+    tvt_dic['val']   = pd.concat( [ B[0][3], B[1][3], B[2][3], B[3][3], sgn_inst['val'].jets.get_group(0), sgn_inst['val'].jets.get_group(1), sgn_inst['val'].jets.get_group(2), sgn_inst['val'].jets.get_group(3)] )
+    tvt_dic['test']  = pd.concat( [ B[0][1], B[1][1], B[2][1], B[3][1], sgn_inst['test'].jets.get_group(0), sgn_inst['test'].jets.get_group(1), sgn_inst['test'].jets.get_group(2), sgn_inst['test'].jets.get_group(3)] )
+
+
+
+ 
+    """
+    # jet 123
+    tvt_dic['train'] = pd.concat( [ B[1][0], B[2][0], B[3][0], B[1][2], B[2][2], B[3][2], sgn_inst['train'].jets.get_group(1), sgn_inst['train'].jets.get_group(2), sgn_inst['train'].jets.get_group(3)] )
+    tvt_dic['val']   = pd.concat( [ B[1][3], B[2][3], B[3][3], sgn_inst['val'].jets.get_group(1), sgn_inst['val'].jets.get_group(2), sgn_inst['val'].jets.get_group(3)] )
+    tvt_dic['test']  = pd.concat( [ B[1][1], B[2][1], B[3][1], sgn_inst['test'].jets.get_group(1), sgn_inst['test'].jets.get_group(2), sgn_inst['test'].jets.get_group(3)] )
+    """
+
+    """
+    # jet 01
+    tvt_dic['train'] = pd.concat( [ B[0][0], B[1][0], B[0][2], B[1][2], sgn_inst['train'].jets.get_group(0), sgn_inst['train'].jets.get_group(1)] )
+    tvt_dic['val']   = pd.concat( [ B[0][3], B[1][3], sgn_inst['val'].jets.get_group(0), sgn_inst['val'].jets.get_group(1)] )
+    tvt_dic['test']  = pd.concat( [ B[0][1], B[1][1], sgn_inst['test'].jets.get_group(0), sgn_inst['test'].jets.get_group(1)] )
     """
 
 
@@ -169,13 +197,25 @@ def TVTgen(
         DF_dic[key] = ((tmp_inst.df)[ col2keep ])
 
     if drop_nan:
+         #for key in tvt_l:
+         #    DF_dic[key] = DF_dic[key][ DF_dic[key]['isNaN']==False ]   
          for key in tvt_l:
-             DF_dic[key] = DF_dic[key][ DF_dic[key]['isNaN']==False ]   
+             #DF_dic[key] = DF_dic[key].dropna()   
+             print '--------------------------------------------------------------'
+             print len(DF_dic[key])
+             #print DF_dic[key].isnull().any(1).sum()   
+
+             #print (DF_dic[key]['PX_0']>88888888).sum()   
+             #print (DF_dic[key]['PX_39']>88888888).sum()
+             print 'number of empty entries: ', (DF_dic[key]['E_0']==0).sum()
+             print (DF_dic[key]['E_39']==0).sum()
+             #print DF_dic[key] 
+             #DF_dic[key] = DF_dic[key][ DF_dic[key].notnull().any(1) ]
+             
 
     #if sgn_genMatch:
     #     for key in tvt_l:
     #         DF_dic[key] = DF_dic[key][ DF_dic[key]['isNaN']==False ]
-
 
     return DF_dic['train'], DF_dic['val'], DF_dic['test']           
 
