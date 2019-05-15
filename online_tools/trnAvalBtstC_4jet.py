@@ -22,8 +22,8 @@ phpt['test']  = '30_1000'#'50_5000'
 
 
 if sys.argv[1]:
-    #phpt['test']  = sys.argv[1]
-    phpt['train']  = sys.argv[1]
+    phpt['test']  = sys.argv[1]
+    #phpt['train']  = sys.argv[1]
 
 
 ABC_str       = ''

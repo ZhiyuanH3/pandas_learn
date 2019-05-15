@@ -18,7 +18,7 @@ def TVTgen(
     #====settings==================================================================================================
 
     drop_nan      = True#False#True 
-    sgn_genMatch  = True
+    sgn_genMatch  = False#True
 
     v_production  = 'v6'
     n_jets        = 4#2
@@ -56,6 +56,8 @@ def TVTgen(
     for i in tvt_l:
         sgn_inst[i]  = pkl_df(pth_dic[i], 'vbf_'+phpt[i]+file_tail+'.h5')
         sgn_inst[i].gen_matching(sgn_genMatch)     
+        ## gen-match in later step ... 
+
 
     #sgn_inst['test']                = pkl_df(pth_test_sgn, 'vbf_'+phpt['test']+file_tail+'.h5')
     upperLimitPerXs = None#100000
@@ -152,12 +154,12 @@ def TVTgen(
     """
 
 
-
+    """ 
     # jet 0123
     tvt_dic['train'] = pd.concat( [ B[0][0], B[1][0], B[2][0], B[3][0], B[0][2], B[1][2], B[2][2], B[3][2], sgn_inst['train'].jets.get_group(0), sgn_inst['train'].jets.get_group(1), sgn_inst['train'].jets.get_group(2), sgn_inst['train'].jets.get_group(3)] )
     tvt_dic['val']   = pd.concat( [ B[0][3], B[1][3], B[2][3], B[3][3], sgn_inst['val'].jets.get_group(0), sgn_inst['val'].jets.get_group(1), sgn_inst['val'].jets.get_group(2), sgn_inst['val'].jets.get_group(3)] )
     tvt_dic['test']  = pd.concat( [ B[0][1], B[1][1], B[2][1], B[3][1], sgn_inst['test'].jets.get_group(0), sgn_inst['test'].jets.get_group(1), sgn_inst['test'].jets.get_group(2), sgn_inst['test'].jets.get_group(3)] )
-
+    """
 
 
  
@@ -174,6 +176,53 @@ def TVTgen(
     tvt_dic['val']   = pd.concat( [ B[0][3], B[1][3], sgn_inst['val'].jets.get_group(0), sgn_inst['val'].jets.get_group(1)] )
     tvt_dic['test']  = pd.concat( [ B[0][1], B[1][1], sgn_inst['test'].jets.get_group(0), sgn_inst['test'].jets.get_group(1)] )
     """
+
+
+
+    #"""
+    ######################################################################### 
+    B_trn_lst = []
+    B_val_lst = []
+    B_tst_lst = []
+    S_trn_lst = []
+    S_val_lst = []
+    S_tst_lst = []
+
+    ## jet 0123
+    for jet_i  in range(n_jets): 
+        ## training sample:
+        B_trn_lst.append(B[jet_i][0])
+        B_trn_lst.append(B[jet_i][2])
+        ## signal for training should be gen-matched:
+        sgn_trn_jet_i_tmp     = sgn_inst['train'].jets.get_group(jet_i)
+        msk_match_trn         = sgn_trn_jet_i_tmp['isGenMatched'] == 1
+        sgn_trn_jet_i_matched = sgn_trn_jet_i_tmp[ msk_match_trn ] 
+        S_trn_lst.append(sgn_trn_jet_i_matched)
+ 
+        ## validation sample:
+        B_val_lst.append(B[jet_i][3])
+        ## signal for validation should be gen-matched:
+        sgn_val_jet_i_tmp     = sgn_inst['val'].jets.get_group(jet_i)
+        msk_match_val         = sgn_val_jet_i_tmp['isGenMatched'] == 1
+        sgn_val_jet_i_matched = sgn_val_jet_i_tmp[ msk_match_val ]
+        S_val_lst.append(sgn_val_jet_i_matched)
+        #S_val_lst.append(sgn_inst['val'].jets.get_group(jet_i))
+
+        ## testing sample: 
+        B_tst_lst.append(B[jet_i][1])
+        S_tst_lst.append(sgn_inst['test'].jets.get_group(jet_i))
+
+    tvt_dic['train'] = pd.concat( B_trn_lst + S_trn_lst )
+    tvt_dic['val']   = pd.concat( B_val_lst + S_val_lst )
+    #tvt_dic['test']  = pd.concat( B_tst_lst + S_tst_lst )
+    tvt_dic['test']  = pd.concat( B_tst_lst + S_tst_lst + B_trn_lst + S_trn_lst + B_val_lst + S_val_lst )
+    #########################################################################
+    #"""
+
+
+
+
+
 
 
 
